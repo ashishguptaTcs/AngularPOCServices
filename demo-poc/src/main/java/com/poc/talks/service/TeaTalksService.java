@@ -79,7 +79,7 @@ public class TeaTalksService {
         return "Tea Recipe Added Successfully bearing id - " +(teaRecipeBean.getCreatedBy() + (i+1));
     }
 
-    public List getTea(String id, String userId){
+    public TeaRecipeBean getTea(String id, String userId){
         MongoClient mongoClient = new MongoClient(environment.getProperty("mongodb.host"), Integer.valueOf(environment.getProperty("mongodb.port")));
         MongoDatabase mongoDatabase = mongoClient.getDatabase(environment.getProperty("mongodb.database"));
         MongoCollection<Document> mongoCollection = mongoDatabase.getCollection(environment.getProperty("mongodb.tea.collection"));
@@ -87,6 +87,7 @@ public class TeaTalksService {
         List usersToSearch = new ArrayList();
         usersToSearch.add(environment.getProperty("default.User"));
         usersToSearch.add(userId);
+        TeaRecipeBean teaBean = new TeaRecipeBean();
         try{
             List<BasicDBObject> docList = new ArrayList<>();
             Document search = new Document();
@@ -95,15 +96,23 @@ public class TeaTalksService {
             search.put("$and", docList);
             Iterator<Document> itr = mongoCollection.find(search).projection(Projections.excludeId()).iterator();
             while(itr.hasNext()){
-                teaList.add(itr.next());
+                Document resultDoc = itr.next();
+                teaBean.setId(resultDoc.getString("id"));
+                teaBean.setBrand(resultDoc.getString("brand"));
+                teaBean.setCreatedBy(resultDoc.getString("createdBy"));
+                teaBean.setCupSize(resultDoc.getInteger("cupSize"));
+                teaBean.setMilk(resultDoc.getBoolean("milk"));
+                teaBean.setName(resultDoc.getString("name"));
+                teaBean.setSugar(resultDoc.getBoolean("sugar"));
+                teaBean.setWater(resultDoc.getBoolean("water"));
+                teaBean.setIngredients((List<String>)resultDoc.get("ingredients"));
             }
-
         }catch (Exception e){
             throw new DatabaseException("Error while reading data from database " + e);
         }finally {
             mongoClient.close();
         }
-        return teaList;
+        return teaBean;
     }
 
     /*public String addNewTeaToDB(TeaRecipeBean teaRecipeBean){

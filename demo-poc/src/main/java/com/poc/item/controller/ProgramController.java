@@ -379,8 +379,9 @@ public class ProgramController{
        StringBuffer details = new StringBuffer();
         details.append("[{");
         int i = 0;
-      String zipcode = dataList.get(i).get("zipCode").toString();
-      details.append("'zipCode':'"+ zipcode+"','stores':[{");
+     // String zipcode = dataList.get(i).get("zipCode").toString();
+      //details.append("'zipCode':'"+ zipcode+"','stores':[{");
+      details.append("'stores':[{");
         for (Document items : dataList) {
             String city = dataList.get(i).get("city").toString();
             details.append("'city':'"+ city+"',");

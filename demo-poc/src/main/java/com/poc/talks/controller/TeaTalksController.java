@@ -39,7 +39,7 @@ public class TeaTalksController {
     }
 
     @RequestMapping(value = "/getTea/{id}/{userId}" , method = RequestMethod.GET)
-    public List getTea(@PathVariable("id") String id, @PathVariable("userId") String userId){
+    public TeaRecipeBean getTea(@PathVariable("id") String id, @PathVariable("userId") String userId){
         return teaTalksService.getTea(id, userId);
     }
 
