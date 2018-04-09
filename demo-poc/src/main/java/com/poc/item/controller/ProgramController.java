@@ -233,6 +233,15 @@ public class ProgramController{
             return message;
         }
 
+        List<Document> dataList = (List<Document>) collection.find(Filters.eq("_id",itemDto.getId().trim())).into(
+                new ArrayList<Document>());
+
+        if(dataList.size()!=0){
+            String message="{'message':'Item with id: " + itemDto.getId() + " already exists'}";
+            message = message.replaceAll("'",String.valueOf('"'));
+            return message;
+        }
+
         Document document = new Document("title",itemDto.getTitle().trim())
                 .append("description", itemDto.getDescription().trim())
                 .append("by", itemDto.getBy().trim())

@@ -54,6 +54,8 @@ public class TeaTalksService {
         MongoCollection<Document> mongoCollection = mongoDatabase.getCollection(environment.getProperty("mongodb.tea.collection"));
         ObjectMapper mapper = new ObjectMapper();
         int i = 0;
+        StringBuffer response = new StringBuffer();
+
         try{
             //Fetching number of Recipes already added by User
 
@@ -70,13 +72,16 @@ public class TeaTalksService {
             ArrayList<Document> documentList = new ArrayList<>();
             documentList.add(document);
             mongoCollection.insertOne(document);
-
+            response.append("{\n");
+            response.append("\"message\" : \"Tea Recipe Added Successfully.\",\n");
+            response.append("\"id\" : \"" + (teaRecipeBean.getCreatedBy() + (i+1)) + "\"\n");
+            response.append("}");
         }catch(Exception e){
             throw new DatabaseException("Error while performing database operation." + e);
         }finally {
             mongoClient.close();
         }
-        return "Tea Recipe Added Successfully bearing id - " +(teaRecipeBean.getCreatedBy() + (i+1));
+        return response.toString();
     }
 
     public TeaRecipeBean getTea(String id, String userId){
