@@ -80,6 +80,7 @@ public class ProductController{
         }//for loop end
         String retVal =  details.toString();
         retVal = retVal.replaceAll("'", String.valueOf('"'));
+        LOG.info("List of all products==> "+retVal);
         LOG.info("Exiting getDetails()");
         return retVal;
     } //main function end
@@ -140,6 +141,7 @@ public class ProductController{
         }//for loop end
         String retVal =  details.toString();
         retVal = retVal.replaceAll("'", String.valueOf('"'));
+        LOG.info("List of queried product==> "+retVal);
         LOG.info("Exiting getSpecificDetails()");
         return retVal;
     }
@@ -219,6 +221,7 @@ public class ProductController{
         }
 
         LOG.info("Exiting deleteSpecificDetails()");
+        LOG.info("Deleted product==> "+deletedData);
         return deletedData;
 
     }
@@ -369,8 +372,7 @@ public class ProductController{
         StringBuffer details = new StringBuffer();
         details.append("{");
         int index = 0;
-        // String zipcode = dataList.get(i).get("zipCode").toString();
-        //details.append("'zipCode':'"+ zipcode+"','stores':[{");
+
         details.append("'stores':[{");
         for (Document items : dataList) {
             String city = dataList.get(index).get("city").toString();
@@ -389,6 +391,7 @@ public class ProductController{
 
         String retVal =  details.toString();
         retVal = retVal.replaceAll("'", String.valueOf('"'));
+        LOG.info("Mapped stored of input zipcode "+ id + " is:" +retVal);
         LOG.info("Exiting getStoreSpecificDetails()");
         return retVal;
     }
