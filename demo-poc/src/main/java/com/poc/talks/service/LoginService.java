@@ -33,7 +33,7 @@ public class LoginService {
         String response = "";
         Boolean result = checkUser(user.getUserId());
         if (result) {
-            MongoClient mongoClient = new MongoClient(environment.getProperty("mongodb.host"), Integer.valueOf(environment.getProperty("mongodb.port")));
+            MongoClient mongoClient = new MongoClient(environment.getProperty("spring.data.mongodb.host"), Integer.valueOf(environment.getProperty("spring.data.mongodb.port")));
             MongoDatabase mongoDatabase = mongoClient.getDatabase(environment.getProperty("mongodb.database"));
             MongoCollection<Document> mongoCollection = mongoDatabase.getCollection(environment.getProperty("mongodb.tea.users.collection"));
             try{
@@ -83,7 +83,7 @@ public class LoginService {
 
         if(!flag) {
 
-            MongoClient mongoClient = new MongoClient(environment.getProperty("mongodb.host"), Integer.valueOf(environment.getProperty("mongodb.port")));
+            MongoClient mongoClient = new MongoClient(environment.getProperty("spring.data.mongodb.host"), Integer.valueOf(environment.getProperty("spring.data.mongodb.port")));
             MongoDatabase mongoDatabase = mongoClient.getDatabase(environment.getProperty("mongodb.database"));
             MongoCollection<Document> mongoCollection = mongoDatabase.getCollection(environment.getProperty("mongodb.tea.users.collection"));
             ObjectMapper mapper = new ObjectMapper();
@@ -114,7 +114,7 @@ public class LoginService {
     {
 
         Boolean flag=false;
-        MongoClient mongoClient = new MongoClient(environment.getProperty("mongodb.host"), Integer.valueOf(environment.getProperty("mongodb.port")));
+        MongoClient mongoClient = new MongoClient(environment.getProperty("spring.data.mongodb.host"), Integer.valueOf(environment.getProperty("spring.data.mongodb.port")));
         MongoDatabase mongoDatabase = mongoClient.getDatabase(environment.getProperty("mongodb.database"));
         MongoCollection<Document> mongoCollection = mongoDatabase.getCollection(environment.getProperty("mongodb.tea.users.collection"));
         try{

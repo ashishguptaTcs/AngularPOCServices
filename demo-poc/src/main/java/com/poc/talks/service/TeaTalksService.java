@@ -25,19 +25,33 @@ public class TeaTalksService {
     Environment environment;
 
     public List getTeaList(String user){
-        MongoClient mongoClient = new MongoClient(environment.getProperty("mongodb.host"), Integer.valueOf(environment.getProperty("mongodb.port")));
+        MongoClient mongoClient = new MongoClient(environment.getProperty("spring.data.mongodb.host"), Integer.valueOf(environment.getProperty("spring.data.mongodb.port")));
         MongoDatabase mongoDatabase = mongoClient.getDatabase(environment.getProperty("mongodb.database"));
         MongoCollection<Document> mongoCollection = mongoDatabase.getCollection(environment.getProperty("mongodb.tea.collection"));
         List<String> usersToSearch = new ArrayList<>();
         List teaList = new ArrayList<>();
         usersToSearch.add(environment.getProperty("default.User"));
-        usersToSearch.add(user);
+
         try{
             Document inQuery = new Document();
             inQuery.put("createdBy", new BasicDBObject("$in", usersToSearch));
             Iterator<Document> itr = mongoCollection.find(inQuery).projection(Projections.excludeId()).iterator();
+
             while(itr.hasNext()){
                 teaList.add(itr.next());
+            }
+
+            if(!user.equals(environment.getProperty("default.User"))){
+
+                usersToSearch = new ArrayList<>();
+                usersToSearch.add(user);
+
+                inQuery = new Document();
+                inQuery.put("createdBy", new BasicDBObject("$in", usersToSearch));
+                itr = mongoCollection.find(inQuery).projection(Projections.excludeId()).iterator();
+                while (itr.hasNext()) {
+                    teaList.add(itr.next());
+                }
             }
 
         }catch(Exception e){
@@ -49,7 +63,7 @@ public class TeaTalksService {
     }
 
     public String addNewTea(TeaRecipeBean teaRecipeBean){
-        MongoClient mongoClient = new MongoClient(environment.getProperty("mongodb.host"), Integer.valueOf(environment.getProperty("mongodb.port")));
+        MongoClient mongoClient = new MongoClient(environment.getProperty("spring.data.mongodb.host"), Integer.valueOf(environment.getProperty("spring.data.mongodb.port")));
         MongoDatabase mongoDatabase = mongoClient.getDatabase(environment.getProperty("mongodb.database"));
         MongoCollection<Document> mongoCollection = mongoDatabase.getCollection(environment.getProperty("mongodb.tea.collection"));
         ObjectMapper mapper = new ObjectMapper();
@@ -85,7 +99,7 @@ public class TeaTalksService {
     }
 
     public TeaRecipeBean getTea(String id, String userId){
-        MongoClient mongoClient = new MongoClient(environment.getProperty("mongodb.host"), Integer.valueOf(environment.getProperty("mongodb.port")));
+        MongoClient mongoClient = new MongoClient(environment.getProperty("spring.data.mongodb.host"), Integer.valueOf(environment.getProperty("spring.data.mongodb.port")));
         MongoDatabase mongoDatabase = mongoClient.getDatabase(environment.getProperty("mongodb.database"));
         MongoCollection<Document> mongoCollection = mongoDatabase.getCollection(environment.getProperty("mongodb.tea.collection"));
         List teaList = new ArrayList();

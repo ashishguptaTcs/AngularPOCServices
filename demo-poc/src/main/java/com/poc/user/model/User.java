@@ -11,11 +11,20 @@ import java.util.Map;
 public class User {
 
     @Id
+    private String id;
+    private String applicationId;
     private String userName;
     private String name;
     private String email;
     private String password;
-    private String applicationId;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getApplicationId() {
         return applicationId;

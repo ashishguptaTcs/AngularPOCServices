@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,32 +33,50 @@ public class UserController {
 
 
     @ApiOperation(value = "User List")
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "all/{appId}", method = RequestMethod.GET)
     @CrossOrigin
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(@PathVariable String appId) {
         LOG.info("Getting all users.");
-        return userRepository.findAll();
+        List<User> userList = userRepository.findAll();
+
+        List<User> userList1 = new ArrayList<>();
+
+        for (int index = 0; index < userList.size();index++){
+           if(userList.get(index).getApplicationId().trim().equals(appId.trim())){
+               userList1.add(userList.get(index));
+           }
+        }
+        //return userRepository.findAll();
+        return userList1;
     }
 
-    @RequestMapping(value = "/{userName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{applicationID}/{userName}", method = RequestMethod.GET)
     @CrossOrigin
-    public User getUser(@PathVariable String userName) {
-        LOG.info("Getting user with ID: {}.", userName);
-        return userRepository.findOne(userName);
+    public User getUser(@PathVariable String applicationID,
+                        @PathVariable String userName) {
+        LOG.info("Getting user with ID: {}.", userName.trim());
+        return userRepository.findOne(applicationID.trim()+userName.trim());
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @CrossOrigin
-    public ResponseEntity<CreateUserResponse> addNewUsers(@RequestBody User emp) {
+    public ResponseEntity<CreateUserResponse> addNewUsers(@RequestBody User user) {
+
+        CreateUserResponse cur = new CreateUserResponse();
+        if(user.getApplicationId().trim().equals("bucketListApp")){
+            user.setEmail("");
+            user.setName("");
+        }
 
         Object obj = null;
-        CreateUserResponse cur = new CreateUserResponse();
         System.out.println("obj - " + obj );
-        System.out.println("emp.getUserName() - " + emp.getUserName());
-        obj = userRepository.findOne(emp.getUserName());
+        System.out.println("emp.getUserName() - " + user.getUserName().trim());
+        //obj = userRepository.findOne(emp.getUserName());
+        obj = userRepository.findOne(user.getApplicationId().trim()+user.getUserName().trim());
         if(obj == null) {
             LOG.info("Saving user.");
-            userRepository.save(emp);
+            user.setId(user.getApplicationId().trim()+user.getUserName().trim());
+            userRepository.save(user);
             cur.setMessage("User Created Successfully");
             return ResponseEntity.ok(cur);
         }
@@ -71,7 +89,7 @@ public class UserController {
     public ResponseEntity<AuthenticateUserResponse> authUserUsers(@RequestBody AuthenticateUserRequest request) {
         AuthenticateUserResponse authUserResponse = new AuthenticateUserResponse();
         User user = null;
-        user  = userRepository.findOne(request.getUserId());
+        user  = userRepository.findOne(request.getApplicationId().trim()+request.getUserId().trim());
 
         if (user!=null) {
             authUserResponse = uService.authenticateUser(user, request);
@@ -80,11 +98,5 @@ public class UserController {
         }
         return ResponseEntity.ok(authUserResponse);
     }
-
-
-
-
-
-
 }
 
