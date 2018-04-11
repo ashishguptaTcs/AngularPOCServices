@@ -82,10 +82,9 @@ public class BucketListController {
             return userTasks;
         }else {
             LOG.info("No tasks are present in this owner's bucket list");
-            return null;
+            return userTasks;
         }
     }
-
 
     //Fetches all tasks except one with a given owner present in the bucket list.
     @RequestMapping(value = "/notin/{owner}", method = RequestMethod.GET)
@@ -105,10 +104,8 @@ public class BucketListController {
         return bucketListExcepOne;
     }
 
-
-
     //Deletes the tasks with a given id present in the bucket list.
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<CreateUserResponse> deleteTask(@PathVariable String id) {
         LOG.info("Deleting Task with ID: {}.", id);
         Object obj = null;

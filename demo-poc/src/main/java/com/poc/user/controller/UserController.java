@@ -50,6 +50,23 @@ public class UserController {
         return userList1;
     }
 
+    @ApiOperation(value = "User List with only user id")
+    @RequestMapping(value = "all/userList/{appId}", method = RequestMethod.GET)
+    @CrossOrigin
+    public List<String> getUserList(@PathVariable String appId) {
+        LOG.info("Getting all users.");
+        List<User> userList = userRepository.findAll();
+
+        List<String> userList1 = new ArrayList<>();
+
+        for (int index = 0; index < userList.size();index++){
+            if(userList.get(index).getApplicationId().trim().equals(appId.trim())){
+                userList1.add(userList.get(index).getUserName());
+            }
+        }
+        return userList1;
+    }
+
     @RequestMapping(value = "/{applicationID}/{userName}", method = RequestMethod.GET)
     @CrossOrigin
     public User getUser(@PathVariable String applicationID,

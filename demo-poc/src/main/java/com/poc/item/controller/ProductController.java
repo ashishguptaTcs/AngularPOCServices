@@ -87,9 +87,9 @@ public class ProductController{
 
     @RequestMapping(value ="/details/{id}", method = RequestMethod.GET)
     @CrossOrigin
-    public String getSpecificDetails(@PathVariable String id){
+    public String getSpecificProduct(@PathVariable String id){
 
-        LOG.info("Entering into getSpecificDetails()");
+        LOG.info("Entering into getSpecificProduct()");
 
         if(id.isEmpty()){
             String message="{'message':'One or more field(s) are empty'}";
@@ -141,20 +141,41 @@ public class ProductController{
         }//for loop end
         String retVal =  details.toString();
         retVal = retVal.replaceAll("'", String.valueOf('"'));
-        LOG.info("List of queried product==> "+retVal);
-        LOG.info("Exiting getSpecificDetails()");
+        LOG.info("List of queried product==> " + retVal);
+        LOG.info("Exiting getSpecificProduct()");
         return retVal;
     }
 
     @RequestMapping(value ="/details/{id}", method = RequestMethod.PUT)
     @CrossOrigin
-    public String updateSpecificDetails(@PathVariable String id,
+    public String updateProductDetails(@PathVariable String id,
                                         @RequestBody ItemDto itemDto){
 
-        LOG.info("Entering updateSpecificDetails()");
+        LOG.info("Entering updateProductDetails()");
 
         if(itemDto.getId().isEmpty()||itemDto.getTitle().isEmpty()||itemDto.getDescription().isEmpty()||itemDto.getBy().isEmpty()||itemDto.getImageUrl().isEmpty()){
             String message="{'message':'One or more field(s) are empty'}";
+            message = message.replaceAll("'",String.valueOf('"'));
+            LOG.error(message);
+            return message;
+        }
+
+        if(!id.equals(itemDto.getId().trim())){
+            String message="{'message':'Product id information is not matching'}";
+            message = message.replaceAll("'",String.valueOf('"'));
+            LOG.error(message);
+            return message;
+        }
+
+        if(id.trim().length() > 10 || itemDto.getId().trim().length() > 10){
+            String message="{'message':'Product id length should not be more than 10 characters'}";
+            message = message.replaceAll("'",String.valueOf('"'));
+            LOG.error(message);
+            return message;
+        }
+
+        if(!itemDto.getImageUrl().startsWith("https://")){
+            String message="{'message':'Invalid Image URL structure'}";
             message = message.replaceAll("'",String.valueOf('"'));
             LOG.error(message);
             return message;
@@ -185,16 +206,23 @@ public class ProductController{
             return message;
         }
         LOG.info("Exiting updateSpecificDetails()");
-        return getSpecificDetails(id);
+        return getSpecificProduct(id);
     }
 
     @RequestMapping(value ="/details/{id}", method = RequestMethod.DELETE)
     @CrossOrigin
-    public String deleteSpecificDetails(@PathVariable String id){
-        LOG.info("Entering deleteSpecificDetails()");
+    public String deleteProduct(@PathVariable String id){
+        LOG.info("Entering deleteProduct()");
 
         if(id.isEmpty()){
             String message="{'message':'Id is empty'}";
+            message = message.replaceAll("'",String.valueOf('"'));
+            LOG.error(message);
+            return message;
+        }
+
+        if(id.length()>10){
+            String message="{'message':'Product id length should not be more than 10 characters'}";
             message = message.replaceAll("'",String.valueOf('"'));
             LOG.error(message);
             return message;
@@ -210,7 +238,7 @@ public class ProductController{
         }
 
         Bson query = new Document("_id",id.trim());
-        String deletedData = getSpecificDetails(id);
+        String deletedData = getSpecificProduct(id);
         Document result = collection.findOneAndDelete(query);
 
         if(result==null || result.size()==0){
@@ -220,7 +248,7 @@ public class ProductController{
             return message;
         }
 
-        LOG.info("Exiting deleteSpecificDetails()");
+        LOG.info("Exiting deleteProduct()");
         LOG.info("Deleted product==> "+deletedData);
         return deletedData;
 
@@ -230,12 +258,26 @@ public class ProductController{
     @CrossOrigin
     @ResponseBody
 
-    public String addSpecificDetails    (@RequestBody ItemDto itemDto ){
+    public String addNewProduct (@RequestBody ItemDto itemDto ){
 
-        LOG.info("Entering addSpecificDetails()");
+        LOG.info("Entering addNewProduct()");
 
         if(itemDto.getId().isEmpty()||itemDto.getTitle().isEmpty()||itemDto.getDescription().isEmpty()||itemDto.getBy().isEmpty()||itemDto.getImageUrl().isEmpty()){
             String message="{'message':'One or more field(s) are empty'}";
+            message = message.replaceAll("'",String.valueOf('"'));
+            LOG.error(message);
+            return message;
+        }
+
+        if(itemDto.getId().length()>10){
+            String message="{'message':'Product id length should not be more than 10 characters'}";
+            message = message.replaceAll("'",String.valueOf('"'));
+            LOG.error(message);
+            return message;
+        }
+
+        if(!itemDto.getImageUrl().startsWith("http://")||!itemDto.getImageUrl().startsWith("https://")){
+            String message="{'message':'Invalid Image URL structure'}";
             message = message.replaceAll("'",String.valueOf('"'));
             LOG.error(message);
             return message;
@@ -267,8 +309,8 @@ public class ProductController{
                 .append("_id",itemDto.getId().trim());
 
         collection.insertOne(document);
-        LOG.info("Exiting addSpecificDetails()");
-        return getSpecificDetails(itemDto.getId().trim());
+        LOG.info("Exiting addNewProduct()");
+        return getSpecificProduct(itemDto.getId().trim());
 
     }
     private MongoCollection<Document> getCollection(String dbName,String collectionName){

@@ -53,22 +53,4 @@ public class TeaTalksController {
         return login.signup(user);
     }
 
-    /*@RequestMapping(value = "/addTeaToDB", method = RequestMethod.POST)
-    public String add(@RequestBody TeaRecipeBean teaRecipe){
-        return teaTalksService.addNewTeaToDB(teaRecipe);
-    }
-
-    @RequestMapping(value = "/getTeaListFromDB/{user}", method = RequestMethod.GET)
-    public List getList(@PathVariable("user") String user){
-        List teaList = teaTalksService.getTeaListFromDB(user);
-        if(teaList.size() == 0) throw new TeaNotFoundException("No Tea Recipe found against user " + user );
-        return teaList;
-    }
-
-    @RequestMapping(value = "/getTeaFromDB/{id}/{userId}", method = RequestMethod.GET)
-    public List getTeaFromDB(@PathVariable("id") String id, @PathVariable("userId") String userId){
-        List tea = teaTalksService.getTeaFromDB(id, userId);
-        if(tea.size() == 0) throw new TeaNotFoundException("No Tea Recipe found against id " + id );
-        return tea;
-    }*/
 }
