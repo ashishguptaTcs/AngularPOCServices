@@ -1,8 +1,12 @@
 package com.poc.user.model;
 
+import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,12 +14,25 @@ import java.util.Map;
 @Document
 public class User {
 
+    @ApiModelProperty(example = "bucketListApprohan89",
+            value = "Id number", hidden = true)
     @Id
     private String id;
+    @NotEmpty
+    @ApiModelProperty(required = true, dataType = "string",example = "app01")
     private String applicationId;
     private String userName;
     private String name;
+
+    @Size(max = 255)
+    @Pattern(regexp = "[^@]+@[^@]+",
+            message = "must be valid email address format")
+    @ApiModelProperty(value =
+            "email address of the user.",
+            required = true, example = "test@coolhosting.com")
     private String email;
+    @NotEmpty
+    @ApiModelProperty(required = true, dataType = "string",example = "Welcome@123")
     private String password;
 
     public String getId() {

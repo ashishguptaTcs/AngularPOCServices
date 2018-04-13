@@ -7,6 +7,7 @@ import com.mongodb.client.model.Filters;
 import java.util.*;
 import com.mongodb.util.JSON;
 import com.poc.item.bean.ZipBean;
+import io.swagger.annotations.ApiModel;
 import org.bson.conversions.Bson;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
 import org.slf4j.Logger;
-
+import io.swagger.annotations.ApiModel;
 
 
 @RestController
@@ -29,6 +29,7 @@ public class ProductController{
     public Environment environment;
     @RequestMapping(value ="/details", method = RequestMethod.GET)
     @CrossOrigin
+
     public String getDetails(){
 
         LOG.info("Entering into getDetails()");
@@ -262,25 +263,28 @@ public class ProductController{
 
         LOG.info("Entering addNewProduct()");
 
-        if(itemDto.getId().isEmpty()||itemDto.getTitle().isEmpty()||itemDto.getDescription().isEmpty()||itemDto.getBy().isEmpty()||itemDto.getImageUrl().isEmpty()){
+       if(itemDto.getId().isEmpty()||itemDto.getTitle().isEmpty()||itemDto.getDescription().isEmpty()||itemDto.getBy().isEmpty()||itemDto.getImageUrl().isEmpty()){
             String message="{'message':'One or more field(s) are empty'}";
             message = message.replaceAll("'",String.valueOf('"'));
             LOG.error(message);
-            return message;
+            //return message;
+           return "";
         }
 
         if(itemDto.getId().length()>10){
             String message="{'message':'Product id length should not be more than 10 characters'}";
             message = message.replaceAll("'",String.valueOf('"'));
             LOG.error(message);
-            return message;
+           // return message;
+            return "";
         }
 
-        if(!itemDto.getImageUrl().startsWith("http://")||!itemDto.getImageUrl().startsWith("https://")){
+        if(!itemDto.getImageUrl().startsWith("https://")){
             String message="{'message':'Invalid Image URL structure'}";
             message = message.replaceAll("'",String.valueOf('"'));
             LOG.error(message);
-            return message;
+           // return message;
+            return "";
         }
 
         MongoCollection<Document> collection = getCollection("mongoDb","productCollection");
@@ -289,7 +293,8 @@ public class ProductController{
             String message="{'message':'Can not connect to database'}";
             message = message.replaceAll("'",String.valueOf('"'));
             LOG.error(message);
-            return message;
+           // return message;
+            return "";
         }
 
         List<Document> dataList = (List<Document>) collection.find(Filters.eq("_id",itemDto.getId().trim())).into(
@@ -299,7 +304,8 @@ public class ProductController{
             String message="{'message':'Item with id: " + itemDto.getId() + " already exists'}";
             message = message.replaceAll("'",String.valueOf('"'));
             LOG.info(message);
-            return message;
+           // return message;
+            return "";
         }
 
         Document document = new Document("title",itemDto.getTitle().trim())
@@ -321,12 +327,12 @@ public class ProductController{
 
             // Creating a Mongo client
             mongo = new MongoClient(environment.getProperty("spring.data.mongodb.host") , Integer.valueOf(environment.getProperty("spring.data.mongodb.port")));
-
+/*
             // Creating Credentials
             MongoCredential credential;
             credential = MongoCredential.createCredential("sampleUser", dbName,
                     "password".toCharArray());
-            LOG.info("Connected to the database successfully");
+            LOG.info("Connected to the database successfully");*/
 
             // Accessing the database
             MongoDatabase database = mongo.getDatabase(dbName);
