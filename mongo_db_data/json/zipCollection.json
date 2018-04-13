@@ -1,0 +1,6 @@
+{"_id":{"$oid":"5ac73be605e2e847ec419115"},"zipCode":"400076","area":"versova","city":"versova"}
+{"_id":{"$oid":"5ac73c0905e2e847ec419118"},"city":"mumbai","area":"powai","zipCode":"400076"}
+{"_id":{"$oid":"5ac7454605e2e864a4451451"},"city":"kolkata","area":"sinthi","zipCode":"700090"}
+{"_id":{"$oid":"5ac7519005e2e8a364595b3d"},"city":"string","area":"string","zipCode":"400076"}
+{"_id":{"$oid":"5ac774c205e2e872503d0ce8"},"city":"mumbai","area":"marol","zipCode":"400065"}
+{"_id":{"$oid":"5ac7973b05e2e872503d0d91"},"city":"mumbai","area":"vikhroli","zipCode":"400065"}

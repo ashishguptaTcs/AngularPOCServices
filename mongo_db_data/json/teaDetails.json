@@ -1,0 +1,16 @@
+{"_id":{"$oid":"5acb2eec05e2e80dec3b7044"},"id":"nilabha1","name":"cow","water":true,"milk":true,"sugar":false,"brand":"tajmahal","cupSize":500,"ingredients":["weed"],"createdBy":"nilabha"}
+{"_id":{"$oid":"5acb33ea05e2e8db9c803e6d"},"id":"Default1","name":"tea","water":true,"milk":true,"sugar":false,"brand":"lipton","cupSize":5,"ingredients":["milk"],"createdBy":"Default"}
+{"_id":{"$oid":"5acb513c05e2e8343071c5f3"},"id":"Akshay1","name":"Society tea","water":false,"milk":true,"sugar":true,"brand":"Society","cupSize":2,"ingredients":["Milk","Sugar"],"createdBy":"Akshay"}
+{"_id":{"$oid":"5acb536205e2e8343071c602"},"id":"Default2","name":"Herbal Tea","water":true,"milk":true,"sugar":true,"brand":"Tata","cupSize":1,"ingredients":["Tulsi","Cardamom"],"createdBy":"Default"}
+{"_id":{"$oid":"5acb581405e2e8343071c61f"},"id":"Default3","name":"Ginger Tea","water":true,"milk":true,"sugar":true,"brand":"Tetley","cupSize":1,"ingredients":["Ginger"],"createdBy":"Default"}
+{"_id":{"$oid":"5acb5f7a05e2e856844c24c9"},"id":"chatterjee1","name":"nilabhaSpecial","water":true,"milk":true,"sugar":true,"brand":"india","cupSize":420,"ingredients":["sugar"],"createdBy":"chatterjee"}
+{"_id":{"$oid":"5acb613505e2e8eee097f596"},"id":"Default4","name":"Green Tea","water":true,"milk":false,"sugar":true,"brand":"Society","cupSize":3,"ingredients":["Ginger","Lemon"],"createdBy":"Default"}
+{"_id":{"$oid":"5acb631a05e2e8eee097f5ae"},"id":"Default5","name":"Lemon Tea","water":true,"milk":false,"sugar":false,"brand":"Lipton","cupSize":1,"ingredients":["Lemon","Cardamom"],"createdBy":"Default"}
+{"_id":{"$oid":"5acb742b05e2e840f00f62af"},"id":"Default6","name":"sfrfsddsf","water":false,"milk":true,"sugar":true,"brand":"Tata","cupSize":2,"ingredients":[],"createdBy":"Default"}
+{"_id":{"$oid":"5acc90e605e2e8a3acfbed9a"},"id":"alan231","name":"Rubbish Tea","water":false,"milk":true,"sugar":false,"brand":"Society","cupSize":3,"ingredients":["Lemon"],"createdBy":"alan23"}
+{"_id":{"$oid":"5acc9d0005e2e83464feac9d"},"id":"Default7","name":"Gadre Tea","water":true,"milk":true,"sugar":true,"brand":"Gadre","cupSize":10,"ingredients":["Tea","Milk","Sugar"],"createdBy":"Default"}
+{"_id":{"$oid":"5acca19305e2e85490136440"},"id":"marlin191","name":"asdasd","water":false,"milk":true,"sugar":true,"brand":"Tata","cupSize":2,"ingredients":["Lemon"],"createdBy":"marlin19"}
+{"_id":{"$oid":"5accb25c05e2e8c60c4947cd"},"id":"alan232","name":"Nescafe Tea","water":false,"milk":true,"sugar":true,"brand":"Society","cupSize":3,"ingredients":["Lemon","Tulsi"],"createdBy":"alan23"}
+{"_id":{"$oid":"5accd1ce05e2e857c49d3e65"},"id":"dubeyshiv1","name":"herbal","water":true,"milk":true,"sugar":true,"brand":"Tata","cupSize":2,"ingredients":["Ginger","Lemon","Tulsi"],"createdBy":"dubeyshiv"}
+{"_id":{"$oid":"5ace0bf305e2e857d04d43a6"},"id":"string1","name":"string","water":true,"milk":true,"sugar":true,"brand":"string","cupSize":0,"ingredients":["string"],"createdBy":"string"}
+{"_id":{"$oid":"5ace0c2905e2e857d04d43a8"},"id":"ankitap1","name":"Ice Tea","water":true,"milk":false,"sugar":true,"brand":"Lipton","cupSize":3,"ingredients":["Lemon"],"createdBy":"ankitap"}
